@@ -12,9 +12,9 @@ class MasterServer{
 		
 		$q = mysql_query("UPDATE `$settings_table` SET `host`='$host',`port`=$post,`sort`=$sort");
 		if($q)
-			echo '<div class="alert alert-success"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>Настройки успешно обновлены!</b></div>';
+			echo '<div class="alert alert-success"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>Settings updated successfully!</b></div>';
 		else
-			echo '<div class="alert alert-error"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>Произошла ошибка, обновите страницу и попробуйте снова.</b></div>';
+			echo '<div class="alert alert-error"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>There was an error, refresh the page and try again.</b></div>';
 	}
 	
 	static function RefreshList()
@@ -54,10 +54,10 @@ class MasterServer{
 		if($q)
 		{
 			exec("screen -A -m -d -S masterserver php master/ms.php");
-			return '<div class="alert alert-success"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>Мастер-сервер запущен.</b></div>';
+			return '<div class="alert alert-success"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>The master server is running.</b></div>';
 		}
 		else
-			return '<div class="alert alert-error"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>Произошла ошибка, обновите страницу и попробуйте снова.</b></div>';	
+			return '<div class="alert alert-error"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>There was an error, refresh the page and try again.</b></div>';	
 	}
 	
 	static function Stop()
@@ -69,16 +69,16 @@ class MasterServer{
 		{
 			$fsock = fsockopen("udp://".$settings['host'],$settings['port'],$errnum,$errstr,2);
 			fwrite($fsock, "\x31\xFF\x30\x2E\x30\x2E\x30\x2E\x30\x3A\x30\x00\x5C\x67\x61\x6D\x65\x64\x69\x72\x5C\x63\x73\x74\x72\x69\x6B\x65\x00");
-			return '<div class="alert alert-success"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>Мастер-сервер остановлен.</b></div>';
+			return '<div class="alert alert-success"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>The master server is stopped.</b></div>';
 		}
 		else
-			return '<div class="alert alert-error"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>Произошла ошибка, обновите страницу и попробуйте снова.</b></div>';
+			return '<div class="alert alert-error"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>There was an error, refresh the page and try again.</b></div>';
 	}
 	static function Restart()
 	{
 		MasterServer::Stop();
 		MasterServer::Start();
-		return '<div class="alert alert-success"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>Мастер-сервер перезапущен.</b></div>';
+		return '<div class="alert alert-success"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>The master server is restarted.</b></div>';
 	}
 }
 
