@@ -27,7 +27,7 @@
 		</div>
 	</div>
 </div>
-<div class="content"> 
+<div class="content">
 	<legend>Basic settings</legend>
 		<div class="well sidebar-nav">
 			<div id="message"></div>
@@ -37,13 +37,13 @@
 					<tr><td>Port</td><td><input type="text" name="port" id="port" size="5" value="<?php echo $settings['port']; ?>"></td></tr>
 					<tr><td>Sort by ping</td><td>
 						<select id="sort">
-							<option value="1" <?php if($settings['sort']){echo 'selected';} ?>>Enabled</option> 
-							<option value="0" <?php if(!$settings['sort']){echo 'selected';} ?>>Disabled</option> 
+							<option value="1" <?php if($settings['sort']){echo 'selected';} ?>>Enabled</option>
+							<option value="0" <?php if(!$settings['sort']){echo 'selected';} ?>>Disabled</option>
 						</select>
-					</td></tr>					
+					</td></tr>
 				</table>
 				<input id="button" class="btn btn-primary" onClick="set();" value="Refresh">
-			 </form>	
+			 </form>
 		</div>
 			<table class="table table-bordered">
 				<tr>

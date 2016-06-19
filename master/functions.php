@@ -5,33 +5,33 @@ class MasterServer{
 	static function Settings()
 	{
 		include 'config.php';
-		
+
 		$host = $_POST['host'];
 		$post = $_POST['port'];
 		$sort = $_POST['sort'];
-		
+
 		$q = mysql_query("UPDATE `$settings_table` SET `host`='$host',`port`=$post,`sort`=$sort");
 		if($q)
 			echo '<div class="alert alert-success"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>Settings updated successfully!</b></div>';
 		else
 			echo '<div class="alert alert-error"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>There was an error, refresh the page and try again.</b></div>';
 	}
-	
+
 	static function RefreshList()
 	{
 		include 'config.php';
 		$packet = "\xFF\xFF\xFF\xFF\x66\x0A";
-		
+
 		mysql_query("UPDATE `information` SET `refreshtime`=".time()." WHERE 1");
 
 		$q = "SELECT * FROM `$dbtable`";
 		$res = mysql_query($q);
-		
+
 		while($row=mysql_fetch_array($res)) {
 
 		$tmp = explode(':', $row['ip']);
 		$ip = explode('.', gethostbyname($tmp['0']));
-						
+
 			if(count($ip) == 4) {
 				$packet .= pack("C*", "$ip[0]");
 				$packet .= pack("C*", "$ip[1]");
@@ -41,11 +41,11 @@ class MasterServer{
 			}
 		}
 		if($settings['sort'])
-			$packet .= "\x00\x00\x00\x00\x00\x00";	
-		
+			$packet .= "\x00\x00\x00\x00\x00\x00";
+
 		return $packet;
 	}
-	
+
 	static function Start()
 	{
 		include 'config.php';
@@ -57,13 +57,13 @@ class MasterServer{
 			return '<div class="alert alert-success"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>The master server is running.</b></div>';
 		}
 		else
-			return '<div class="alert alert-error"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>There was an error, refresh the page and try again.</b></div>';	
+			return '<div class="alert alert-error"><button id="close" type="button" class="close" OnClick="CloseMessage();">&times;</button><b>There was an error, refresh the page and try again.</b></div>';
 	}
-	
+
 	static function Stop()
 	{
 		include 'config.php';
-		
+
 		$q = mysql_query("UPDATE `$settings_table` SET `status`=0");
 		if($q)
 		{
